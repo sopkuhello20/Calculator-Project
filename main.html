@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+
+
+<h1>Calculator</h1>
+
+
+<div>INPUT</div>
+<input type="text" id="num1" name="num1" readonly><br>
+<input type="text" id="operator" name="operator" size="1" readonly><br>
+<input type="text" id="num2" name="num2" readonly><br>
+<input type="button" value="Calculate" onclick="calculateResult()"><br><br>
+<div>RESULT</div>
+<input type="text" id="result" name="result" readonly><br><br>
+
+<div id="num-buttons"></div><br>
+<input type="button" value="+" onclick="operator('+')">
+<input type="button" value="-" onclick="operator('-')">
+<input type="button" value="x" onclick="operator('*')">
+<input type="button" value="/" onclick="operator('/')">
+<input type="button" value="CLEAR" onclick="clearField()">
+
+
+<script type="text/javascript">
+    for (let i = 0; i <= 9; i++) {
+        document.getElementById('num-buttons').innerHTML +=
+            `<input type="button" value="${i}" onclick="addNum(${i})">`;
+    }
+    function operator(op) {
+        document.getElementById('operator').value = op;
+    }
+    function addNum(val){
+        if (document.getElementById('operator').value) {
+            document.getElementById('num2').value += val;
+        } else {
+            document.getElementById('num1').value += val;
+        }
+    }
+    function clearField() {
+        document.getElementById('num1').value = '';
+        document.getElementById('operator').value = '';
+        document.getElementById('num2').value = '';
+        document.getElementById('result').value = '';
+    }
+    function calculateResult(){
+        if(document.getElementById('num1').value === '' || 
+           document.getElementById('num2').value === '' || 
+           document.getElementById('operator').value === '') {
+            alert("Please fill in all fields before calculating.");
+            return;
+        }
+        let num1 = parseFloat(document.getElementById('num1').value);
+        let num2 = parseFloat(document.getElementById('num2').value);
+        let operator = document.getElementById('operator').value;
+        if(operator == "+") {
+            document.getElementById('result').value = num1 + num2;
+        } else if(operator == "-") {
+            document.getElementById('result').value = num1 - num2;
+        } else if(operator == "*") {
+            document.getElementById('result').value = num1 * num2;
+        } else if(operator == "/") {
+            if(num2 === 0) {
+                alert("Cannot divide by zero.");
+                return;
+            }
+            document.getElementById('result').value = num1 / num2;
+        } else {
+            alert("Invalid operator.");
+        }
+    }
+</script>
+
+</body>
+</html>
